@@ -2,19 +2,19 @@ from __future__ import annotations
 
 import traceback
 
-import cpu
+from .. import core
 
 
 def test_registers() -> None:
     print("[CPU] Registers:", end="")
 
     print(" handwritten,", end="")
-    hw_cpu = cpu.CPU.create()
-    cpu.fuckaround_registers(hw_cpu)
+    hw_cpu = core.CPU.create()
+    core.fuckaround_registers(hw_cpu)
     print(" done,", end="")
 
     print(" interpreted,", end="")
-    ip_cpu = cpu.CPU.create()
+    ip_cpu = core.CPU.create()
     ip_cpu.interpret(
         """
 set r0, 69
@@ -43,12 +43,12 @@ def test_memory() -> None:
     print("[CPU] Memory:", end="")
 
     print(" handwritten,", end="")
-    hw_cpu = cpu.CPU.create()
-    cpu.fuckaround_memory(hw_cpu)
+    hw_cpu = core.CPU.create()
+    core.fuckaround_memory(hw_cpu)
     print(" done,", end="")
 
     print(" interpreted,", end="")
-    ip_cpu = cpu.CPU.create()
+    ip_cpu = core.CPU.create()
     ip_cpu.interpret(
         """
 set r13, 2
@@ -78,12 +78,12 @@ def test_functions() -> None:
     print("[CPU] Function [cmp, jmp]:", end="")
 
     print(" handwritten,", end="")
-    hw_cpu = cpu.CPU.create()
-    cpu.fuckaround_compare(hw_cpu)
+    hw_cpu = core.CPU.create()
+    core.fuckaround_compare(hw_cpu)
     print(" done,", end="")
 
     print(" interpreted,", end="")
-    ip_cpu = cpu.CPU.create()
+    ip_cpu = core.CPU.create()
     ip_cpu.interpret(
         """
 set r5, 420
@@ -107,7 +107,7 @@ jmpeq 2
     print("[CPU] Loop: Checks out.")
 
 
-def main() -> int:
+def run() -> int:
     print("[CPU] Handwritten and Interpreted code test, start.")
 
     try:
@@ -125,4 +125,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(run())

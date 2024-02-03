@@ -1,4 +1,4 @@
 from __future__ import annotations
 
-from . import cpu
+from . import core
 from . import test

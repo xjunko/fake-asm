@@ -1,4 +1,4 @@
-""" cpu.py - the real shit
+""" core.py - the real shit
     disclaimer:
         - i have no fucking clue how a real CPU works like, this is just me guessing.
         - lots of tech jargons are being used wrongly but it should get the point across.
@@ -15,6 +15,7 @@ from __future__ import annotations
 import traceback
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
 from typing import Self
 
 
@@ -315,6 +316,18 @@ class CPU:
         self._initiate_cpu(reg_size=reg_size, mem_size=mem_size)
 
         return self
+
+    # Utils
+    @staticmethod
+    def from_file(file_path: Path | str) -> Self:
+        if isinstance(file_path, str):
+            file_path = Path(file_path)
+
+        cpu = CPU.create()
+        code = file_path.read_text()
+        cpu.interpret(code)
+
+        return cpu
 
 
 def fuckaround_registers(cpu: CPU) -> None:

@@ -1,4 +1,5 @@
 """ miku.py - simple assembly bootleg thingamajig """
+from __future__ import annotations
 
 __author__ = "xJunko"
 __github__ = "xJunko"

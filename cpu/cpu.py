@@ -1,8 +1,7 @@
-""" cpu.py - the real shit """
-"""
+""" cpu.py - the real shit
     disclaimer:
         - i have no fucking clue how a real CPU works like, this is just me guessing.
-        - lots of tech jargons are being used wrongly but it should get the point across. 
+        - lots of tech jargons are being used wrongly but it should get the point across.
 
     notes:
         - "byte" is not actually a byte.
@@ -11,6 +10,7 @@
         - compare only use the first "byte" of internal compare memory
         - cmp must has jmpeq or jmpneq after it else the first byte of compare memory will stay positive.
 """
+from __future__ import annotations
 
 import traceback
 from dataclasses import dataclass
@@ -46,7 +46,7 @@ class OperationType(Enum):
     JUMPNEQ = 0xD3
 
     @staticmethod
-    def from_str(text: str) -> "OperationType":
+    def from_str(text: str) -> OperationType:
         """return the matching enum from string"""
 
         return {
@@ -104,7 +104,11 @@ class CPU:
 
     # Public
     def execute(
-        self, op: Operation, *, debug: bool = False, manual: bool = False
+        self,
+        op: Operation,
+        *,
+        debug: bool = False,
+        manual: bool = False,
     ) -> int | None:
         if not op:
             return
@@ -117,7 +121,7 @@ class CPU:
 
         if debug:
             print(
-                f"[CPU] [{len(self.operations) - 1}] {op.action} inbound, {op.destination} - {op.inputs=}"
+                f"[CPU] [{len(self.operations) - 1}] {op.action} inbound, {op.destination} - {op.inputs=}",
             )
 
         match op.action:
@@ -234,7 +238,9 @@ class CPU:
             ]
 
             operation = Operation(
-                action=OperationType.SET, destination=0xB00B, inputs=[]
+                action=OperationType.SET,
+                destination=0xB00B,
+                inputs=[],
             )
 
             operation.action = OperationType.from_str(items[0])
@@ -328,7 +334,7 @@ def fuckaround_registers(cpu: CPU) -> None:
 
     # mult r4, r3, r2
     cpu.execute(
-        op=Operation(action=OperationType.MULTIPLY, destination=4, inputs=[3, 2])
+        op=Operation(action=OperationType.MULTIPLY, destination=4, inputs=[3, 2]),
     )
 
     # div r5, r4, r2
@@ -355,7 +361,7 @@ def fuckaround_memory(cpu: CPU) -> None:
 
     # div r15, r15, r13 ; divide by two
     cpu.execute(
-        op=Operation(action=OperationType.DIVIDE, destination=15, inputs=[15, 13])
+        op=Operation(action=OperationType.DIVIDE, destination=15, inputs=[15, 13]),
     )
 
     # load r15, m1
@@ -363,7 +369,7 @@ def fuckaround_memory(cpu: CPU) -> None:
 
     # div r15, r15, r13 ; divide by two, again
     cpu.execute(
-        op=Operation(action=OperationType.DIVIDE, destination=15, inputs=[15, 13])
+        op=Operation(action=OperationType.DIVIDE, destination=15, inputs=[15, 13]),
     )
 
 
@@ -371,13 +377,15 @@ def fuckaround_compare(cpu: CPU) -> ...:
     # stop loop at
     # set r5, 420
     cpu.execute(
-        op=Operation(action=OperationType.SET, destination=5, inputs=[420]), manual=True
+        op=Operation(action=OperationType.SET, destination=5, inputs=[420]),
+        manual=True,
     )
 
     # constant number for adding
     # set r10, 1
     cpu.execute(
-        op=Operation(action=OperationType.SET, destination=10, inputs=[1]), manual=True
+        op=Operation(action=OperationType.SET, destination=10, inputs=[1]),
+        manual=True,
     )
 
     # add r11, r11, r10

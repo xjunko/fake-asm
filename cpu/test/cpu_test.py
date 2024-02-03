@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import traceback
 
 import cpu
@@ -21,7 +23,7 @@ add r2, r0, r1
 sub r3, r2, r1
 mult r4, r3, r2
 div r5, r4, r2
-"""
+""",
     )
 
     print(" done, comparing values! \n", end="")
@@ -49,15 +51,15 @@ def test_memory() -> None:
     ip_cpu = cpu.CPU.create()
     ip_cpu.interpret(
         """
-set r13, 2 
+set r13, 2
 add r15, r2, r3
 store m0, r15
-add r15, r15, r15 
-store m1, r15 
-div r15, r15, r13 
+add r15, r15, r15
+store m1, r15
+div r15, r15, r13
 load r15, m1
-div r15, r15, r13 
-"""
+div r15, r15, r13
+""",
     )
     print(" done, comparing values! \n", end="")
 
@@ -89,7 +91,7 @@ set r10, 1
 add r11, r11, r10
 cmp r11, r5, 0b010
 jmpeq 2
-"""
+""",
     )
 
     print(" done, comparing values! \n", end="")
